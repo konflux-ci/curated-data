@@ -1,0 +1,31 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '0 * * * *' # every hour
+  workflow_dispatch: # on button click
+
+jobs:
+  fetch-upstream:
+    runs-on: ubuntu-latest
+    name: Fetch Upstream
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: clearlydefined/curated-data
+          token: ${{ secrets.SYNC_BOT_TOKEN }}
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Configure git
+        shell: bash
+        run: |
+          git config --global user.name "Sync Bot"
+          git config --global user.email "noreply@konflux-ci.dev"
+          git remote add downstream https://synchrontron:${{ secrets.SYNC_BOT_TOKEN }}@github.com/konflux-ci/curated-data.git
+      - name: Fetch and merge
+        id: fetch-merge
+        shell: bash
+        run: |
+          git checkout master
+          git push --tags downstream master:upstream

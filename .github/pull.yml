@@ -1,6 +1,0 @@
-# Configuration for https://github.com/wei/pull
-version: "1"
-rules:
-  - base: upstream
-    upstream: clearlydefined:master
-    mergeMethod: hardreset
