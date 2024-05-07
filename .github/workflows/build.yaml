@@ -1,0 +1,15 @@
+name: "Run the build script"
+on:
+  push:
+    branches:
+      - main
+  pull_request_target:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run the build script to verify
+        shell: bash
+        run: |
+          npm run-script build
