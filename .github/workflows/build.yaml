@@ -6,7 +6,7 @@ on:
   pull_request_target:
 
 jobs:
-  main:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: run the build script to verify
