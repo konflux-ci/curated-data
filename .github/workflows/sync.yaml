@@ -28,4 +28,4 @@ jobs:
         shell: bash
         run: |
           git checkout master
-          git push --tags downstream master:upstream
+          git push --tags downstream master:upstream --force
