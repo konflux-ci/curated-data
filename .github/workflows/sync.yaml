@@ -30,6 +30,7 @@ jobs:
           git checkout master
           git push --tags downstream master:upstream --force
   rebase-downstream:
+    needs: [reset-upstream]
     runs-on: ubuntu-latest
     name: Rebase our downstream branch on upstream branch
     steps:
