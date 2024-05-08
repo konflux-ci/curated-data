@@ -6,9 +6,9 @@ on:
   workflow_dispatch: # on button click
 
 jobs:
-  fetch-upstream:
+  reset-upstream:
     runs-on: ubuntu-latest
-    name: Fetch Upstream
+    name: Reset our upstream branch to the upstream repo
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,3 +29,24 @@ jobs:
         run: |
           git checkout master
           git push --tags downstream master:upstream --force
+  rebase-downstream:
+    runs-on: ubuntu-latest
+    name: Rebase our downstream branch on upstream branch
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SYNC_BOT_TOKEN }}
+          fetch-depth: 0
+      - name: Configure git
+        shell: bash
+        run: |
+          git config --global user.name "Sync Bot"
+          git config --global user.email "noreply@konflux-ci.dev"
+      - name: Rebase and push
+        id: fetch-merge
+        shell: bash
+        run: |
+          git checkout downstream
+          git rebase upstream
+          git push origin downstream --force
