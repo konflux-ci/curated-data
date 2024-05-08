@@ -48,6 +48,7 @@ jobs:
         id: fetch-merge
         shell: bash
         run: |
+          git checkout upstream
           git checkout downstream
           git rebase upstream
           git push origin downstream --force
